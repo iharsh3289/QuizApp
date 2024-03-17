@@ -1,0 +1,102 @@
+@import "../settings";
+@import "../base/base";
+
+
+.arrow:hover{
+  color: $blue;
+}
+.create-quiz {
+
+  z-index: 70;
+  width: 100%;
+  height: 100%;
+
+  display: flex;
+  flex-direction: column;
+  gap: 45px;
+  padding: $xlg;
+  background-color: #1e2837;
+  color: white;
+  font-size: 1.5rem;
+  input{
+    background-color: #1e2837;
+    border: 2px solid white;
+    border-radius: 5px;
+    height: $lg;
+    padding: 5px;
+    font-size: $normal;
+    width: 90%;
+  }
+  input::placeholder{
+    font-size: 1.2rem;
+    padding: 5px;
+  }
+  .add-your-quiz {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    h1 {
+      font-size: $lg;
+      font-weight: 500;
+    }
+    .publish {
+      display: flex;
+      gap: 10px;
+      align-items: center;
+      .publish-button {
+        background-color: $blue;
+        padding: 10px;
+        border-radius: 10px;
+        cursor: pointer;
+        transition: 0.3s linear all;
+        font-size: $normal;
+      }
+      .publish-button:hover {
+        background-color: darken($color: $blue, $amount: 7%);
+      }
+    }
+  }
+  .add-question {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+    input{
+        width: 80%; 
+    }
+  }
+  .options{
+    display: grid;
+    gap: 30px;
+    grid-template-columns: 1fr 1fr;
+  }
+  .add-button {
+    background-color: $blue;
+    padding: 10px;
+    border-radius: 10px;
+    cursor: pointer;
+    transition: 0.3s linear all;
+    font-size: $normal;
+    width: fit-content;
+  }
+  .add-button:hover {
+    background-color: darken($color: $blue, $amount: 7%);
+  }
+}
+.added-question{
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 30px;
+  width: 100%;
+}
+@media (max-width: 1024px){
+    .options{
+        grid-template-columns: 50% 50%;
+        gap: 5px;
+      }
+      .added-question{
+        display: grid;
+        grid-template-columns: 100%;
+        gap: 30px;
+        width: 100%;
+      }
+}

@@ -1,0 +1,85 @@
+@import "../settings.scss";
+#home{
+    background-size: cover;
+    background-position: center;
+    height: 100vh;
+    width: 100vw;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    section{
+        background-color: rgba(0, 0, 0, 0.7);
+        height: 80%;
+        width: 35%;
+        padding-left: $md;
+        padding-right: $md;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 50px;
+        border-radius: 20px;
+    }
+    .buttons{
+        
+        height: 100%;
+        width: 100%;
+        padding-left: $md;
+        padding-right: $md;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 30px;
+        padding-top: 10px;
+        border-radius: 20px;
+    }
+    .cube{
+        color: #691212;
+        
+        font-size: 8rem;
+        padding-top: 20px;
+    }
+    h1{
+        font-size: $lg;
+        font-weight: bold;
+        text-align: center;
+        color: $off-white;
+    }
+    .play-button{
+        background-color: $green;
+        color: #fff;
+        cursor: pointer;
+        padding: $normal 0;
+        display: block;
+        border-radius: $button-radius;
+        width: 45%;
+        text-align: center;
+        transition: 0.3s linear all;
+    }
+    .exit-button{
+        background-color: $red;
+        color: #fff;
+        cursor: pointer;
+        padding: $normal 0;
+        display: block;
+        border-radius: $button-radius;
+        width: 45%;
+        text-align: center;
+        transition: 0.3s linear all;
+    }
+    .play-button:hover{
+        background-color: darken($green, 10%);
+        box-shadow: $shadow;
+        
+    }
+    .exit-button:hover{
+        background-color: darken($red, 20%);
+        box-shadow: $shadow;
+    }
+}
+@media (max-width: 768px){
+    #home section{
+        padding: 0 $normal;
+        width: 80%;
+        height: 80%;
+    }
+}

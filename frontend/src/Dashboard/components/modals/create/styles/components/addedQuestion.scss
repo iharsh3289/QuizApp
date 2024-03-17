@@ -1,0 +1,28 @@
+@import '../settings';
+
+.question-container{
+    font-size: 1.3rem;
+    border: 2px solid white;
+    padding: 20px;
+    border-radius: 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    align-items: start;
+    .options{
+        display: flex;
+        div{
+            background-color: gray;
+            padding: 7px;
+            border-radius: 15px;
+        }
+    }
+}
+.arrow:hover{
+    color: $red;
+  }
+@media (max-width: 768px){
+    .question-container{
+        width: 80%;
+    }
+}

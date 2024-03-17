@@ -1,0 +1,107 @@
+[
+    {
+        "group_id": 1,
+        "group_name": "Science",
+        "group_privacy": "Public"
+    },
+    {
+        "group_id": 2,
+        "group_name": "English",
+        "group_privacy": "Public"
+    },
+    {
+        "group_id": 3,
+        "group_name": "Hindi",
+        "group_privacy": "Public"
+    },
+    {
+        "group_id": 4,
+        "group_name": "Math",
+        "group_privacy": "Public"
+    },
+    {
+        "group_id": 5,
+        "group_name": "Geo",
+        "group_privacy": "Public"
+    },
+    {
+        "group_id": 6,
+        "group_name": "History",
+        "group_privacy": "Public"
+    },
+    {
+        "group_id": 7,
+        "group_name": "Chemistry",
+        "group_privacy": "Public"
+    },
+    {
+        "group_id": 8,
+        "group_name": "Physics",
+        "group_privacy": "Public"
+    },
+    {
+        "group_id": 9,
+        "group_name": "Biology",
+        "group_privacy": "Public"
+    },
+    {
+        "group_id": 10,
+        "group_name": "Philoshpy",
+        "group_privacy": "Public"
+    },
+    {
+        "group_id": 11,
+        "group_name": "Arts",
+        "group_privacy": "Public"
+    },
+    {
+        "group_id": 12,
+        "group_name": "Commerce",
+        "group_privacy": "Public"
+    },
+    {
+        "group_id": 13,
+        "group_name": "Bussiness",
+        "group_privacy": "Public"
+    },
+    {
+        "group_id": 14,
+        "group_name": "Motivation",
+        "group_privacy": "Public"
+    },
+    {
+        "group_id": 15,
+        "group_name": "Veersa",
+        "group_privacy": "Public"
+    },
+    {
+        "group_id": 16,
+        "group_name": "Accounts",
+        "group_privacy": "Private"
+    },
+    {
+        "group_id": 17,
+        "group_name": "Samsung",
+        "group_privacy": "Private"
+    },
+    {
+        "group_id": 18,
+        "group_name": "All India Competition",
+        "group_privacy": "Private"
+    },
+    {
+        "group_id": 19,
+        "group_name": "Haryana",
+        "group_privacy": "Private"
+    },
+    {
+        "group_id": 20,
+        "group_name": "Karnal",
+        "group_privacy": "Private"
+    },
+    {
+        "group_id": 21,
+        "group_name": "Punjab",
+        "group_privacy": "Private"
+    }
+]
