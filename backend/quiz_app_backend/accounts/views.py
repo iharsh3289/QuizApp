@@ -1,5 +1,6 @@
 from django.http import JsonResponse
 from django.shortcuts import render
+import base64
 from rest_framework import viewsets
 from rest_framework.authtoken.models import Token
 from django.contrib.auth.models import User  # Import the User model
@@ -15,7 +16,8 @@ from .Templates.email_reset import message, reset_Password_subject_mail , accoun
 from .Utilities.otp_generator import generate_otp
 from django.contrib.auth import login as Login, logout as Logout
 from rest_framework.authentication import TokenAuthentication
-
+from PIL import Image
+import io
 
 
 
@@ -23,8 +25,8 @@ class RegisterOtpVerify(APIView):
     def post(self, request):
         if request.data['otp'] == request.data['generated_otp']:
             Serilaizerdata = request.data['serailizer_data']
-            print(Serilaizerdata)
             serializer = registerSerializer(data=Serilaizerdata)
+            print(Serilaizerdata)
             if serializer.is_valid(raise_exception=True):
                 registerData = serializer.save()
                 email = EmailMessage(subject="Account Created", body="Your Account Is Created Successfully", to=[registerData.email])
@@ -32,34 +34,37 @@ class RegisterOtpVerify(APIView):
                 data = {"email": registerData.email, "message":"Account Successfully Registered"}
                 return JsonResponse({"success": True, "data": "Success: Account Created Successfully"}, status=200)
         else:
-            return JsonResponse({"success": False, "data": "Failed: Invalid OTP"}, status=400)
+            return JsonResponse({"error": "Failed: Invalid OTP"}, status=400)
 
 
 class register(APIView):
     def post(self, request):
         email=request.data['email']
         user = User.objects.filter(email=email).first()
-        # print(user.email)
+        # request.data['image'] = base64.b64encode(request.data['image'].read())
         if user is not None:
-            return JsonResponse({"success": False, "data": "Failed: User Already Exist"}, status=400)
+            return JsonResponse({"error": "User Already Exist"}, status=400)
         else:
+            image = Image.open(io.BytesIO(request.data['image'].read()))
+            with io.BytesIO() as buffer:
+                image.save(buffer, format="JPEG")
+                image_bytes = buffer.getvalue()
+            encoded_image = base64.b64encode(image_bytes)
+            request.data['image'] = encoded_image
             serializer = registerSerializer(data=request.data)
-            print(serializer.initial_data)
             data = {}
             if serializer.is_valid(raise_exception=True):
                 serializer.data['password'] = request.data['password']
-                print(serializer.data)
-
                 otp = generate_otp()
                 body = message(otp)
                 subject = account_registeration_subject_mail
                 email = EmailMessage(subject=subject, body=body, to=[email])
                 email.send()
                 return JsonResponse(
-                    {"success": True, "serailizer_data": serializer.initial_data, "generated_otp": otp, "data": "otp generated and sent"},
+                    {"success": True, "serailizer_data": request.data, "generated_otp": otp, "data": "otp generated and sent"},
                     status=200)
             else:
-                return JsonResponse({"success": False, "data": "Failed: Something went wrong"}, status=500)
+                return JsonResponse({"error": "Something went wrong"}, status=500)
 
 
 class login(APIView):
@@ -72,7 +77,7 @@ class login(APIView):
             return Response({'token': token.key, "message": "Logged In Succesfully"}, status=200)
             # return Response({"message":"Logged In Succesffully"}, status=200)
             # return Response({'Message':'Login Successful'},status=200)
-        return Response('invalid username and password try again')
+        return Response({'errpr':'invalid username and password try again'}, status=400)
 
 class ForgotPasswordOtpVerify(APIView):
     def post(self, request):

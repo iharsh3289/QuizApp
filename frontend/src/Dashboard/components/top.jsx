@@ -1,12 +1,42 @@
-import React from 'react'
+import React, {useEffect} from 'react'
 import { useNavigate } from 'react-router-dom';
 import { useState } from 'react';
 import { mdiCubeOutline } from "@mdi/js";
 import { Icon } from "@mdi/react";
 import image from "../../../images/ram.jpg";
+import axios from "axios";
 const top = ({setsearch}) => {
   const navigate = useNavigate();
   const [count, setCount] = useState(0);
+  const [profileData, setProfileData]=useState([])
+
+  useEffect(() => {
+    // Simulate loading time with setTimeout
+    const token = localStorage.getItem('token');
+
+    axios.post('http://127.0.0.1:8000/getUserData', {},
+        {
+          headers: {
+            'Content-Type': 'application/json',
+            'Authorization': 'Token'.concat(' ',token),
+          },
+        })
+        .then((response) => {
+          console.log(response)
+          setProfileData(response.data);
+
+        }).catch((error)=>{
+      console.log(error)
+    })
+
+    const timeout = setTimeout(() => {
+      setIsLoading(false);
+    }, 3000); // Simulate 3 seconds of loading time
+
+    // Clean up the timeout
+    return () => clearTimeout(timeout);
+  }, []);
+
   function handleClick() {
     if (localStorage.theme === "dark" || !("theme" in localStorage)) {
       //add class=dark in html element
@@ -138,7 +168,7 @@ const top = ({setsearch}) => {
               <div class="relative flex items-center w-10 h-10 overflow-hidden bg-gray-100 rounded-full dark:bg-gray-600">
                 <img
                     className="h-12 w-auto w-24 mb-3 rounded-full shadow-lg"
-                    src={image}
+                    src={"data:image/png;base64," + profileData.image}
                     alt="Bonnie image"
                 />
               </div>

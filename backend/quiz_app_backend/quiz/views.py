@@ -1,3 +1,7 @@
+import base64
+import io
+
+from PIL import Image
 from django.http import JsonResponse
 from django.shortcuts import render
 from rest_framework import viewsets
@@ -13,6 +17,7 @@ from rest_framework.decorators import action
 from django.contrib.auth import get_user_model
 from django.db.models import Q
 from .models import User_Group_Details , Quiz_groups
+from accounts.serializers import registerSerializer
 
 
 ############# GROUP API's #################
@@ -383,7 +388,12 @@ class getUserData(APIView):
             user = User.objects.get(pk=request.data['user_id'])
         else:
             user = User.objects.get(pk=request.user.id)
+        image = Image.open(io.BytesIO(user.image.read()))
+        with io.BytesIO() as buffer:
+            image.save(buffer, format="JPEG")
+            image_bytes = buffer.getvalue()
+        encoded_image = base64.b64encode(image_bytes)
 
-        return Response({"name":user.name,"email":user.email})
+        return Response({"name":user.name,"email":user.email,"image":encoded_image})
 
 

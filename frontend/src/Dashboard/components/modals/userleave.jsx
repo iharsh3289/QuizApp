@@ -1,6 +1,5 @@
 import React from 'react'
 import { useNavigate } from 'react-router-dom';
-import Home from '../../../game/components/Home';
 import axios from "axios";
 const userleave = ({setclose, quizdata, group_id, group_name, group_privacy}) => {
   const navigate = useNavigate();

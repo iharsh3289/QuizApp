@@ -21,8 +21,8 @@ const Login = ({ setIsLoggedIn }) => {
         })
             .then((response) => {
                 const token = response.data.token;
-                axios.defaults.headers.common['Authorization'] = `Token ${token}`;
-                axios.defaults.headers.common['Content-Type'] = 'application/json';
+                // axios.defaults.headers.common['Authorization'] = `Token ${token}`;
+                // axios.defaults.headers.common['Content-Type'] = 'application/json';
 
                 localStorage.setItem('token', token);
                 localStorage.setItem('isLoggedIn', true);
@@ -30,15 +30,12 @@ const Login = ({ setIsLoggedIn }) => {
             })
             .catch((error) => {
                 console.log(error);
-                if (error.response) {
-                    setError('Invalid email or password');
-                } else if (error.request) {
-                    console.log(error.request);
-                    setError('Network error. Please try again later.');
-                } else {
-                    console.log('Error', error.message);
-                    setError('An unexpected error occurred. Please try again later.');
-                }
+                const created = document.getElementById('error3');
+                created.style.color='red';
+                created.textContent = error.response.data['user'];
+                const timeout = setTimeout(() => {
+                    created.textContent = '';
+                }, 1000);
             })
     }
 
@@ -97,6 +94,7 @@ const Login = ({ setIsLoggedIn }) => {
                                         class="w-full text-white bg-blue-600 hover:bg-blue-700 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Sign
                                     in
                                 </button>
+                                <p id='error3' style={{textAlign:"center"}}></p>
                                 <p class="text-sm font-light text-gray-500 dark:text-gray-400">
                                     Don’t have an account yet? <a onClick={() => {
                                     navigate("/register");

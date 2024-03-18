@@ -100,13 +100,13 @@ const user = ({setclose, quizdata, group_name, group_privacy, group_id}) => {
             <div style={{ scrollbarWidth: "none", height:"30vh", width:"100%", overflowY: "auto"}} class="flex gap-2 items-center p-4 md:p-5 " >
           {
             quizdata.quiz_details?.map((quiz)=>(
-              <a onClick={handleSelectQuiz} href="#" class="block max-w-sm p-6 bg-white border border-gray-200 rounded-lg shadow hover:bg-gray-100 dark:bg-gray-800 dark:border-gray-700 dark:hover:bg-gray-700">
+              <a key={quiz.quiz_id} onClick={handleSelectQuiz} href="#" class="block max-w-sm p-6 bg-white border border-gray-200 rounded-lg shadow hover:bg-gray-100 dark:bg-gray-800 dark:border-gray-700 dark:hover:bg-gray-700">
           
           <h5 class="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white">
-            {/* {quiz.title} */}
+             {quiz.quiz_title}
             </h5>
           <p class="font-normal text-gray-700 dark:text-gray-400">
-            {/* {quiz.quiz_desc} */}
+             {quiz.quiz_desc}
             </p>
           </a>
             ))

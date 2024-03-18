@@ -6,7 +6,6 @@ import Public from "../components/modals/public";
 import Private from "../components/modals/private";
 import Admin from "../components/modals/admin";
 import Userleave from "../components/modals/userleave";
-import Create from "./modals/create/create.jsx";
 import axios from "axios";
 const lists = ({search, global_group , joined_group , created_group}) => {
   const [isLoading, setIsLoading] = useState(true);

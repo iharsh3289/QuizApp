@@ -1,6 +1,8 @@
 from django.urls import path,include
 from . import views
 from rest_framework import routers
+from django.conf import settings
+from django.conf.urls.static import static
 
 router=routers.DefaultRouter()
 
@@ -13,4 +15,4 @@ urlpatterns=[
     path('RegisterOtpVerify', views.RegisterOtpVerify.as_view(), name='RegisterOtpVerify'),
     path('ForgotPasswordOtpVerify', views.ForgotPasswordOtpVerify.as_view(), name='ForgotPasswordOtpVerify')
 
-]
+] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

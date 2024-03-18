@@ -1,6 +1,8 @@
 from django.urls import path,include
 from . import views
 from rest_framework import routers
+from django.conf import settings
+from django.conf.urls.static import static
 
 router=routers.DefaultRouter()
 
@@ -34,4 +36,4 @@ urlpatterns=[
     path('finish_quiz', views.finish_quiz.as_view(), name="finish_quiz"),
     path('getUserData', views.getUserData.as_view(), name="getUserData")
 
-]
+]+ static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

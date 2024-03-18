@@ -1,5 +1,8 @@
 from django.contrib.auth.models import AbstractUser, BaseUserManager
 from django.db import models
+# from base64field.fields import Base64Field
+from django_base64field.fields import Base64Field
+
 # from django.utils.translation import ugettext_lazy as _
 
 
@@ -43,6 +46,8 @@ class User(AbstractUser):
     username = None
     email = models.EmailField(max_length=255, unique=True)
     name = models.CharField(max_length=20, null=False, blank=False)
+    image = models.ImageField(upload_to='images/',null=True, blank=True)
+
 
     USERNAME_FIELD = 'email'
     REQUIRED_FIELDS = []

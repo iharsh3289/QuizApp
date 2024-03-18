@@ -4,40 +4,60 @@ import axios from 'axios';
 import { mdiCubeOutline } from "@mdi/js";
 import { Icon } from "@mdi/react";
 import { useNavigate } from 'react-router-dom';
+import { useEffect, useState } from "react";
 import { Link } from 'react-router-dom';
 const Register = () => {
   const navigate = useNavigate();
+    const [avatar, setAvatar] = useState(null);
+  const [error, seterror]=useState("")
+    function handleImageChange(event) {
+        const file = event.target.files[0];
+        const reader = new FileReader();
+
+        reader.onloadend = () => {
+            setAvatar(reader.result);
+        };
+
+        if (file) {
+            reader.readAsDataURL(file);
+        }
+    }
     function handleSubmit(e){
-      
+
         e.preventDefault();
         const name=e.target[0].value;
         const email=e.target[1].value;
         const password=e.target[2].value;
         const image=e.target[4].files[0];
-        var data = JSON.stringify({
-          "email": email,
-          "password": password,
-          "name": name,
-          "image":image
-        });
+        var formData = new FormData();
+        formData.append('email', email);
+        formData.append('password', password);
+        formData.append('name', name);
+        formData.append('image', image);
 
         var config = {
           method: 'post',
           url: 'http://127.0.0.1:8000/accounts/register',
-          headers: { 
-            'Content-Type': 'application/json',
+          headers: {
+            'Content-Type': 'multipart/form-data',
           },
-          data : data
+          data : formData
         };
 
         axios(config)
         .then(function (response) {
           console.log(JSON.stringify(response.data));
-         
+
           navigate('/verify', {state:response.data});
         })
         .catch(function (error) {
-          console.log(error);
+            console.log(error)
+            const created = document.getElementById('error');
+            created.style.color='red';
+            created.textContent = error.response.data['error'];
+            const timeout = setTimeout(() => {
+                created.textContent = '';
+            }, 1000);
         });
 
     }
@@ -51,14 +71,14 @@ const Register = () => {
               className="cube"
               class="dark:text-white"
             />
-          InstaQuiz      
+          InstaQuiz
       </a>
       <div class="w-full bg-white rounded-lg shadow dark:border md:mt-0 sm:max-w-md xl:p-0 dark:bg-gray-800 dark:border-gray-700">
           <div class="p-2 space-y-4 md:space-y-6 sm:p-8">
               <h1 class="text-xl font-bold leading-tight tracking-tight text-gray-900 md:text-2xl dark:text-white">
                   Create an account
               </h1>
-              <form onSubmit={handleSubmit} class="space-y-2 md:space-y-2" action="#">
+              <form onSubmit={handleSubmit} encType="multipart/form-data" class="space-y-2 md:space-y-2" action="#">
               <div>
                       <label for="name" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Name</label>
                       <input type="name" name="name" id="name" class="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-blue-600 focus:border-blue-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Rajesh" required=""/>
@@ -80,7 +100,9 @@ const Register = () => {
         id="file"
         style={{ display: "none" }}
         type="file"
-        
+        onChange={handleImageChange}
+
+
       />
       <label
         htmlFor="file"
@@ -103,6 +125,12 @@ const Register = () => {
         <span style={{ fontSize: "20px", color: "grey" }}> Add your avtar</span>
       </label>
                   </div>
+
+                  {avatar && (
+                      <div>
+                          <img src={avatar} alt="Avatar Preview" style={{ maxWidth: "100px", maxHeight: "100px" }} />
+                      </div>
+                  )}
                   <div class="flex items-start">
                       <div class="flex items-center h-5">
                         <input id="terms" aria-describedby="terms" type="checkbox" class="w-4 h-4 border border-gray-300 rounded bg-gray-50 focus:ring-3 focus:ring-blue-300 dark:bg-gray-700 dark:border-gray-600 dark:focus:ring-blue-600 dark:ring-offset-gray-800" required=""/>
@@ -111,8 +139,9 @@ const Register = () => {
                         <label for="terms" class="font-light text-gray-500 dark:text-gray-300">I accept the <a class="font-medium text-blue-600 hover:underline dark:text-blue-500" href="#">Terms and Conditions</a></label>
                       </div>
                   </div>
-                  
+
                   <button type="submit" class="w-full text-white bg-blue-600 hover:bg-blue-700 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Create an account</button>
+                  <p id="error" style={{textAlign:"center"}}></p>
                   <p class="text-sm font-light text-gray-500 dark:text-gray-400">
                       Already have an account? <a onClick={()=>{navigate('/login')}} href="#" class="font-medium text-blue-600 hover:underline dark:text-blue-500">Login here</a>
                   </p>
@@ -123,5 +152,5 @@ const Register = () => {
 </section>
   )
 }
- 
+
 export default Register

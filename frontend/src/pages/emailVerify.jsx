@@ -1,8 +1,9 @@
 import React from 'react'
-import { useLocation } from 'react-router-dom';
+import {useLocation, useNavigate} from 'react-router-dom';
 import axios from 'axios';
 const emailVerify = () => {
   const location=useLocation();
+  const navigate = useNavigate();
   function handleOtp(e){
     e.preventDefault();
     const otp=e.target[0].value+e.target[1].value+e.target[2].value+e.target[3].value;
@@ -11,6 +12,7 @@ const emailVerify = () => {
       ...location.state, // Spread the properties of location.state
       otp: otp // Add the new otp property
     };
+    {console.log(newData)}
     var config = {
       method: 'post',
       url: 'http://127.0.0.1:8000/accounts/RegisterOtpVerify',
@@ -26,7 +28,12 @@ const emailVerify = () => {
       navigate('/login');
     })
     .catch(function (error) {
-      console.log(error);
+      const created = document.getElementById('error2');
+      created.style.color='red';
+      created.textContent = error.response.data['error'];
+      const timeout = setTimeout(() => {
+        created.textContent = '';
+      }, 1000);
     });
   }
   return (
@@ -38,7 +45,7 @@ const emailVerify = () => {
           <p>Email Verification</p>
         </div>
         <div class="flex flex-row text-sm font-medium text-gray-400">
-          <p>We have sent a code to your email ba**@dipainhouse.com</p>
+          <p>We have sent a code to your email </p>
         </div>
       </div>
 
@@ -66,6 +73,7 @@ const emailVerify = () => {
                   Verify Account
                 </button>
               </div>
+              <p id='error2' style={{textAlign:"center"}}></p>
 
               <div class="flex flex-row items-center justify-center text-center text-sm font-medium space-x-1 text-gray-500">
                 <p>Didn't recieve code?</p> <a class="flex flex-row items-center text-blue-600" href="http://" target="_blank" rel="noopener noreferrer">Resend</a>
